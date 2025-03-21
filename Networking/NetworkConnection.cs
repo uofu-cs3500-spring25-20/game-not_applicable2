@@ -61,15 +61,7 @@ public sealed class NetworkConnection : IDisposable
     /// <summary>
     /// Gets a value indicating whether the socket is connected.
     /// </summary>
-    public bool IsConnected
-    {
-        get
-        {
-            // TODO: implement this
-            throw new NotImplementedException();
-        }
-    }
-
+    public bool IsConnected => _tcpClient.Client.Connected;
 
     /// <summary>
     ///   Try to connect to the given host:port. 
@@ -129,5 +121,9 @@ public sealed class NetworkConnection : IDisposable
     public void Dispose( )
     {
         Disconnect();
+
+        // Dispose potentially null objeccts
+        _reader?.Dispose();
+        _writer?.Dispose();
     }
 }
